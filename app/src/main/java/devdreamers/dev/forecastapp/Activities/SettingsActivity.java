@@ -6,6 +6,8 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
+import devdreamers.dev.forecastapp.R;
+
 /**
  * Created by jlcs on 5/1/16.
  */
@@ -14,6 +16,12 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //setting the preferences
+        addPreferencesFromResource(R.xml.preferences);
+        //binding the preferences
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_key_location)));
+        //TODO terminar los pendientes de las preferences
     }
 
 

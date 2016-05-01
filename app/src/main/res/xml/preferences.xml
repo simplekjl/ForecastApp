@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <CheckBoxPreference
-        android:key="pref_sync"
-        android:title="pref sinc"
-        android:summary="bla bla bla"
-        android:defaultValue="true" />
-    <RingtonePreference
-        android:key="button_voicemail_ringtone_key"
-        android:title="ring ring"
-        android:ringtoneType="notification" />
+    <EditTextPreference
+        android:title="@string/pref_title_location"
+        android:key="@string/pref_key_location"
+        android:defaultValue="@string/pref_default_value_location"
+        android:inputType="text"
+        android:singleLine="true"/>
+
 </PreferenceScreen>
