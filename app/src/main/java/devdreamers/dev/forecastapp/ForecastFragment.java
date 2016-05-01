@@ -70,8 +70,7 @@ public class ForecastFragment extends Fragment {
 
 
         // recibe 3 parametros, contexto, layout, id del objeto que imflaremos y el array
-        adapter = new ArrayAdapter<String>(getActivity(),R.layout.list_item_forecast,R.id.list_item_forecast_textview,
-                weekForecast);
+        adapter = new ArrayAdapter<String>(getActivity(),R.layout.list_item_forecast,R.id.list_item_forecast_textview,weekForecast);
         listView = (ListView)rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(adapter);
 
@@ -193,15 +192,15 @@ public class ForecastFragment extends Fragment {
         }
 
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-
-
-        @Override
-        protected void onCancelled() {
-            super.onCancelled();
+        protected void onPostExecute(String[] strings) {
+            super.onPostExecute(strings);
+            //validation
+            if(strings != null){
+                adapter.clear();
+                for (String str : strings) {
+                    adapter.add(str);
+                }
+            }
         }
     }
     /* The date/time conversion code is going to be moved outside the asynctask later,
