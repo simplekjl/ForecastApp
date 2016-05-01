@@ -102,13 +102,13 @@ public class ForecastFragment extends Fragment {
      * AsyncTask
      *
      */
-    private class FetchWeatherTask extends AsyncTask<String,Void,Void>{
+    private class FetchWeatherTask extends AsyncTask<String,Void,String[]>{
 
 
         private String LOG_TAG = FetchWeatherTask.class.getSimpleName().toUpperCase();
 
         @Override
-        protected Void doInBackground(String... params) {
+        protected String[] doInBackground(String... params) {
             // These two need to be declared outside the try/catch
             // so that they can be closed in the finally block.
             HttpURLConnection urlConnection = null;
@@ -123,18 +123,18 @@ public class ForecastFragment extends Fragment {
                 // http://openweathermap.org/API#forecast
                 String FORECAST_BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?";
                 String BASE_QUERY = "q";
-                String MODE= "mode";
+                String MODE = "mode";
                 String UNITS = "units";
                 String COUNT = "cnt";
                 String APPID_PARAM = "APPID";
                 Uri builder = Uri.parse(FORECAST_BASE_URL).buildUpon()
-                        .appendQueryParameter(BASE_QUERY,params[0])
-                        .appendQueryParameter(MODE,"json")
-                        .appendQueryParameter(UNITS,"metric")
-                        .appendQueryParameter(COUNT,"7")
-                        .appendQueryParameter(APPID_PARAM,"06435b44c68ebec989cd500efae5c8ed")
+                        .appendQueryParameter(BASE_QUERY, params[0])
+                        .appendQueryParameter(MODE, "json")
+                        .appendQueryParameter(UNITS, "metric")
+                        .appendQueryParameter(COUNT, "7")
+                        .appendQueryParameter(APPID_PARAM, "06435b44c68ebec989cd500efae5c8ed")
                         .build();
-                Log.d(LOG_TAG, "Builder: "+ builder.toString());
+                Log.d(LOG_TAG, "Builder: " + builder.toString());
 
                 //URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7&APPID=06435b44c68ebec989cd500efae5c8ed");
                 URL url = new URL(builder.toString());
@@ -166,13 +166,13 @@ public class ForecastFragment extends Fragment {
                 }
                 forecastJsonStr = buffer.toString();
 
-                Log.v(LOG_TAG,forecastJsonStr);
+                Log.v(LOG_TAG, forecastJsonStr);
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
                 // If the code didn't successfully get the weather data, there's no point in attemping
                 // to parse it.
                 return null;
-            } finally{
+            } finally {
                 if (urlConnection != null) {
                     urlConnection.disconnect();
                 }
@@ -184,7 +184,12 @@ public class ForecastFragment extends Fragment {
                     }
                 }
             }
-        return null;
+            try {
+                return getWeatherDataFromJson(forecastJsonStr, 7);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
 
         @Override
