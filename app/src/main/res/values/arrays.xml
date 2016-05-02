@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="pref_metrics_entries">
-        <item name="metric_system">Metric</item>
-        <item name="imperial_system">Imperial</item>
+        <item >Metric</item>
+        <item >Imperial</item>
     </string-array>
 
     <string-array name="pref_metrics_values">
-        <item name="metric_system">metric</item>
-        <item name="imperial_system">imperial</item>
+        <item>metric</item>
+        <item>imperial</item>
     </string-array>
 </resources>
