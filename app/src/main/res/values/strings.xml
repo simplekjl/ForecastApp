@@ -7,4 +7,11 @@
     <string name="pref_title_location">Location</string>
     <string name="pref_key_location">location</string>
     <string name="pref_default_value_location">30339</string>
+
+    <!-- metrics preferences-->
+    <string name="pref_metrics_default_value">metric</string>
+    <string name="pref_summary_metrics">Change your measure system</string>
+    <string name="pref_metrics_dialog_title">Metrics</string>
+    <string name="pref_title_metrics">Metrics</string>
+    <string name="pref_metric_key">metric_system</string>
 </resources>
