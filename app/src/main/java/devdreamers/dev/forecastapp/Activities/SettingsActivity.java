@@ -17,10 +17,12 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         //setting the preferences
         addPreferencesFromResource(R.xml.preferences);
         //binding the preferences
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_key_location)));
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_metric_key)));
         //TODO terminar los pendientes de las preferences
     }
 
