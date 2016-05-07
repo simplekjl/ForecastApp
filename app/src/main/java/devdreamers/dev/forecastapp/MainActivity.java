@@ -2,17 +2,22 @@ package devdreamers.dev.forecastapp;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import devdreamers.dev.forecastapp.Activities.SettingsActivity;
 
@@ -23,6 +28,8 @@ import devdreamers.dev.forecastapp.Activities.SettingsActivity;
  */
 
 public class MainActivity extends AppCompatActivity {
+
+    private final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 123;
 
     @Override
@@ -114,11 +121,49 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 
+        if (id == R.id.action_map) {
+            openPreferredLocationInMap();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
+
+    private void openPreferredLocationInMap() {
+
+        //getting the shared preferences
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        //look for an specific key if it doesn't find that one it puts the default
+        String location = sharedPreferences.getString(getString(R.string.pref_key_location),
+                getString(R.string.pref_default_value_location));
+        //usgin URI best practice
+        // Using the URI scheme for showing a location found on a map.  This super-handy
+        // intent can is detailed in the "Common Intents" page of Android's developer site:
+        // http://developer.android.com/guide/components/intents-common.html#Maps
+        Uri geoLocation = Uri.parse("geo:0,0?").buildUpon()
+                .appendQueryParameter("q",location)
+                .build();
+
+        //creating the implicit intent
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(geoLocation);
+
+        //validating if there is an activity that can handle the action which we require
+        if(intent.resolveActivity(getPackageManager()) != null)
+        {
+            startActivity(intent);
+        }
+        else {
+            Log.d(LOG_TAG, "Couldn't call " + location + ", no receiving apps installed!");
+            Toast.makeText(MainActivity.this, "Sorry about this we cannot handle the activity of maps",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+
 }

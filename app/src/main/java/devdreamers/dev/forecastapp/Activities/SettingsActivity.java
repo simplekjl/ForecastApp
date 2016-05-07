@@ -1,5 +1,7 @@
 package devdreamers.dev.forecastapp.Activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -38,6 +40,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
             int prefIndex = listPreference.findIndexOfValue(stringValue);
             if(prefIndex >= 0)
             {
+
                 preference.setSummary(listPreference.getEntries()[prefIndex]);
             }
             else{
@@ -64,6 +67,14 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         // current value.
         onPreferenceChange(preference, PreferenceManager.getDefaultSharedPreferences(preference.getContext())
                 .getString(preference.getKey(),""));
+    }
+
+    public void showMap(Uri geoLocation) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(geoLocation);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
 }
