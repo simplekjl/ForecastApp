@@ -22,7 +22,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         addPreferencesFromResource(R.xml.preferences);
         //binding the preferences
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_key_location)));
-        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_metric_key)));
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_units_key)));
         //TODO terminar los pendientes de las preferences
     }
 

@@ -233,10 +233,10 @@ public class ForecastFragment extends Fragment {
      */
     private String formatHighLows(double high, double low, String unitType) {
 
-        if (unitType.equals(getString(R.string.pref_metrics_default_value))) {
+        if (unitType.equals(getString(R.string.pref_units_imperial))) {
             high = (high * 1.8) + 32;
             low = (low * 1.8) + 32;
-        } else if (!unitType.equals(getString(R.string.pref_summary_metrics))) {
+        } else if (!unitType.equals(getString(R.string.pref_units_metric))) {
             Log.d(LOG_TAG, "Unit type not found: " + unitType);
         }
 
@@ -293,8 +293,8 @@ public class ForecastFragment extends Fragment {
         // change this option without us having to re-fetch the data once
         // we start storing the values in a database.
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String unitType = sharedPrefs.getString(getString(R.string.pref_metric_key),
-                getString(R.string.pref_default_value_location));
+        String unitType = sharedPrefs.getString(getString(R.string.pref_units_key),
+                getString(R.string.pref_units_metric));
 
 
         for(int i = 0; i < weatherArray.length(); i++) {
